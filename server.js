@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const mysql = require("mysql2"); // ✅ ADD THIS
 
 const authRoutes    = require("./routes/auth.routes");
 const adminRoutes   = require("./routes/admin.routes");
@@ -10,6 +11,23 @@ const teacherRoutes = require("./routes/teacher.routes");
 const parentRoutes  = require("./routes/parent.routes");
 
 const app = express();
+
+// ✅ ADD DATABASE CONNECTION HERE
+const db = mysql.createConnection({
+  host: process.env.MYSQLHOST,
+  user: process.env.MYSQLUSER,
+  password: process.env.MYSQLPASSWORD,
+  database: process.env.MYSQLDATABASE,
+  port: process.env.MYSQLPORT,
+});
+
+db.connect((err) => {
+  if (err) {
+    console.log("❌ DB Error:", err);
+  } else {
+    console.log("✅ Connected to Railway DB");
+  }
+});
 
 // MIDDLEWARE
 app.use(cors());
