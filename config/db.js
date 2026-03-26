@@ -1,18 +1,17 @@
 const mysql = require("mysql2");
 
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",       // your MySQL password
-  database: "mentra_db"
+  host: process.env.MYSQLHOST,
+  user: process.env.MYSQLUSER,
+  password: process.env.MYSQLPASSWORD,
+  database: process.env.MYSQLDATABASE,
+  port: process.env.MYSQLPORT,
 });
 
-db.connect(err => {
+db.connect((err) => {
   if (err) {
-    console.error("DB Error:", err);
+    console.log("DB Error:", err);
   } else {
-    console.log("✅ MySQL Connected");
+    console.log("Connected to Railway DB ✅");
   }
 });
-
-module.exports = db;
